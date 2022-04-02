@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
+import { loginInitial } from '../redux/actions'
 import './Login.css'
 
 const Login = () => {
@@ -9,10 +10,31 @@ const Login = () => {
     password: '',
   })
   const { email, password } = state
-  const handleSubmit = () => {}
+  const { currentUser } = useSelector((state) => state.user)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (currentUser) {
+      console.log(currentUser)
+      navigate('/')
+    }
+  }, [currentUser, navigate])
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (!email || !password) {
+      return
+    }
+    dispatch(loginInitial(email, password))
+    setState({ email: '', password: '' })
+  }
   const handleGoogleSignIn = () => {}
   const handleFBSignIn = () => {}
-  const handleChange = () => {}
+  const handleChange = (e) => {
+    let { name, value } = e.target
+    setState({ ...state, [name]: value })
+  }
   return (
     <div>
       <div id='logreg-forms'>

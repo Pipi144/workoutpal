@@ -17,7 +17,7 @@ const Register = () => {
 
   useEffect(() => {
     if (currentUser) {
-      navigate('/')
+      navigate('/', { replace: true })
     }
   }, [currentUser, navigate])
   const { email, password, displayName, passwordConfirm } = state
