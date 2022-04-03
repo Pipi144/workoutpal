@@ -36,8 +36,18 @@ const Login = () => {
     setState({ ...state, [name]: value })
   }
   return (
-    <div>
-      <div id='logreg-forms'>
+    <div className='logIn-container'>
+      <h1
+        style={{
+          fontFamily: 'fantasy',
+          color: 'grey',
+          fontSize: '3rem',
+          fontWeight: 'bold',
+        }}
+      >
+        WOKARR
+      </h1>
+      <div id='logForm-container'>
         <form className='form-signin' onSubmit={handleSubmit}>
           <h1
             className='h3 mb-3 font-weight-normal'
