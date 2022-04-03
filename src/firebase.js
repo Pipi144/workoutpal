@@ -1,11 +1,12 @@
 import { initializeApp } from '@firebase/app'
-import 'firebase/auth'
+import 'firebase/compat/auth'
+import 'firebase/database'
 import {
   getAuth,
   GoogleAuthProvider,
   FacebookAuthProvider,
 } from 'firebase/auth'
-
+import { getDatabase } from 'firebase/database'
 const firebaseConfig = {
   apiKey: 'AIzaSyDkyuix9XRgnZUjN84TyYCgTQ2pT3s3aK0',
   authDomain: 'workoutarr.firebaseapp.com',
@@ -19,7 +20,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 
 const auth = getAuth(app)
+const db = getDatabase(app)
 const googleAuthProvider = new GoogleAuthProvider()
 const facebookAuthProvider = new FacebookAuthProvider()
 
-export { auth, googleAuthProvider, facebookAuthProvider }
+export { auth, googleAuthProvider, facebookAuthProvider, db }

@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { getAuth } from 'firebase/auth'
 import { setUser } from './redux/actions'
-
+import Header from './components/Header'
 function App() {
   const dispatch = useDispatch()
 
@@ -25,6 +25,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className='App'>
+        <Header />
         <Routes>
           <Route exact path='/' element={<UserRoute />}>
             <Route exact path='/home' element={<Home />} />
