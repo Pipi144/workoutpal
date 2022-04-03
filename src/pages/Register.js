@@ -34,7 +34,7 @@ const Register = () => {
     setState({ ...state, [name]: value })
   }
   return (
-    <div>
+    <div className='regForm-container'>
       <div id='register-form'>
         <form className='form-signin' onSubmit={handleSubmit}>
           <h1

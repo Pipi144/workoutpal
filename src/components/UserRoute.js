@@ -1,11 +1,11 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import Home from '../pages/Home'
 import LoadingToRedirect from './LoadingToRedirect'
 
-const UserRoute = ({ children, ...rest }) => {
+const UserRoute = () => {
   const { currentUser } = useSelector((state) => state.user)
-  return currentUser ? <Route {...rest} /> : <LoadingToRedirect />
+  return currentUser ? <Home /> : <LoadingToRedirect />
 }
 
 export default UserRoute

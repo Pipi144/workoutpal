@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import { loginInitial } from '../redux/actions'
+import {
+  facebookSignInInitial,
+  googleSignInInitial,
+  loginInitial,
+} from '../redux/actions'
 import './Login.css'
 
 const Login = () => {
@@ -16,7 +20,6 @@ const Login = () => {
 
   useEffect(() => {
     if (currentUser) {
-      console.log(currentUser)
       navigate('/')
     }
   }, [currentUser, navigate])
@@ -29,8 +32,12 @@ const Login = () => {
     dispatch(loginInitial(email, password))
     setState({ email: '', password: '' })
   }
-  const handleGoogleSignIn = () => {}
-  const handleFBSignIn = () => {}
+  const handleGoogleSignIn = () => {
+    dispatch(googleSignInInitial())
+  }
+  const handleFBSignIn = () => {
+    dispatch(facebookSignInInitial())
+  }
   const handleChange = (e) => {
     let { name, value } = e.target
     setState({ ...state, [name]: value })

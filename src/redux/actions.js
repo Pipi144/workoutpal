@@ -1,11 +1,12 @@
 import * as types from './actionTypes'
-import { auth } from '../firebase'
+import { auth, facebookAuthProvider, googleAuthProvider } from '../firebase'
 import {
   getAuth,
   createUserWithEmailAndPassword,
   updateProfile,
   signInWithEmailAndPassword,
   signOut,
+  signInWithPopup,
 } from 'firebase/auth'
 const registerStart = () => ({
   type: types.REGISTER_START,
@@ -42,6 +43,30 @@ const logoutFail = (error) => ({
   payload: error,
 })
 
+const googleSignInStart = () => ({
+  type: types.GOOGLE_SIGN_IN_START,
+})
+const googleSignInSuccess = (user) => ({
+  type: types.GOOGLE_SIGN_IN_SUCCESS,
+  payload: user,
+})
+const googleSignInFail = (error) => ({
+  type: types.GOOGLE_SIGN_IN_FAIL,
+  payload: error,
+})
+
+const facebookSignInStart = () => ({
+  type: types.FACEBOOK_SIGN_IN_START,
+})
+const facebookSignInSuccess = (user) => ({
+  type: types.FACEBOOK_SIGN_IN_SUCCESS,
+  payload: user,
+})
+const facebookSignInFail = (error) => ({
+  type: types.FACEBOOK_SIGN_IN_FAIL,
+  payload: error,
+})
+
 export const registerInitial = (email, password, displayName) => {
   return function (dispatch) {
     dispatch(registerStart())
@@ -53,6 +78,7 @@ export const registerInitial = (email, password, displayName) => {
       })
       .catch((error) => {
         dispatch(registerFail(error))
+        alert(error)
       })
   }
 }
@@ -67,6 +93,7 @@ export const loginInitial = (email, password) => {
       })
       .catch((error) => {
         dispatch(loginFail(error))
+        alert(error.message)
       })
   }
 }
@@ -81,6 +108,42 @@ export const logoutInitial = () => {
       })
       .catch((error) => {
         dispatch(logoutFail(error))
+        alert(error)
+      })
+  }
+}
+
+export const setUser = (user) => ({
+  type: types.SET_USER,
+  payload: user,
+})
+
+export const googleSignInInitial = () => {
+  return function (dispatch) {
+    dispatch(googleSignInStart())
+    const auth = getAuth()
+    signInWithPopup(auth, googleAuthProvider)
+      .then(({ user }) => {
+        dispatch(googleSignInSuccess(user))
+      })
+      .catch((error) => {
+        dispatch(googleSignInFail(error))
+        alert(error)
+      })
+  }
+}
+
+export const facebookSignInInitial = () => {
+  return function (dispatch) {
+    dispatch(facebookSignInStart())
+    const auth = getAuth()
+    signInWithPopup(auth, facebookAuthProvider.addScope('user_birthday, email'))
+      .then(({ user }) => {
+        dispatch(facebookSignInSuccess(user))
+      })
+      .catch((error) => {
+        dispatch(facebookSignInFail(error))
+        alert(error)
       })
   }
 }

@@ -1,0 +1,18 @@
+#register-form {
+ border-radius: 25px;
+ border: 2px solid white;
+ padding: 5%;
+ color: white;
+ background-color: grey;
+ opacity: 85%;
+ box-shadow: 5px 10px whitesmoke;
+
+}
+
+.regForm-container {
+ width: 55%;
+}
+
+#register-form input{
+ margin-bottom: 1%;
+}

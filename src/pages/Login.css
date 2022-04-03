@@ -33,6 +33,18 @@
  margin-bottom: 2%;
 }
 
+#logForm-container .btn-lock{
+ background-color: blue;
+}
+
+#logForm-container .btn-lock:hover{
+ background-color: lightblue;
+}
+
+ #logForm-container input{
+  margin-bottom: 4px;
+ }
+
 @media screen and (max-width: 500px) {
  #logForm-container .social-btn {
   width: 200px;
@@ -60,3 +72,4 @@
   content: "Google+"
  }
 }
+
