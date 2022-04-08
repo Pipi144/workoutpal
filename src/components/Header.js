@@ -8,12 +8,24 @@ const Header = () => {
   const [activeTab, setActiveTab] = useState('Home')
   const location = useLocation()
 
-  const { user } = useSelector((state) => ({ ...state.user }))
+  const { currentUser: user } = useSelector((state) => ({ ...state.user }))
   const dispatch = useDispatch()
 
   const handleAuth = () => {
     dispatch(logoutInitial())
   }
+
+  useEffect(() => {
+    if (location.pathname === '/') {
+      setActiveTab('Home')
+    } else if (location.pathname === '/addContact') {
+      setActiveTab('AddContact')
+    } else if (location.pathname === '/about') {
+      setActiveTab('About')
+    } else if (location.pathname === '/login') {
+      setActiveTab('Signin')
+    }
+  }, [location])
   return (
     <div className='header'>
       <Link to='/'>
@@ -27,12 +39,16 @@ const Header = () => {
           >
             Home
           </p>
+        </Link>
+        <Link to='/addContact'>
           <p
             className={`${activeTab === 'AddContact' ? 'active' : ''}`}
             onClick={() => setActiveTab('AddContact')}
           >
             Add Contact
           </p>
+        </Link>
+        <Link to='/about'>
           <p
             className={`${activeTab === 'About' ? 'active' : ''}`}
             onClick={() => setActiveTab('About')}
@@ -45,12 +61,14 @@ const Header = () => {
             Sign Out
           </p>
         ) : (
-          <p
-            className={`${activeTab === 'Sign In' ? 'active' : ''}`}
-            onClick={() => setActiveTab('Sign In')}
-          >
-            Sign In
-          </p>
+          <Link to='/login'>
+            <p
+              className={`${activeTab === 'Sign In' ? 'active' : ''}`}
+              onClick={() => setActiveTab('Sign In')}
+            >
+              Sign In
+            </p>
+          </Link>
         )}
       </div>
     </div>
