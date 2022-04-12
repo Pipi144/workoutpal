@@ -7,6 +7,7 @@ import {
   loginInitial,
 } from '../redux/actions'
 import './Login.css'
+import { Spinner } from 'react-bootstrap'
 
 const Login = () => {
   const [state, setState] = useState({
@@ -14,7 +15,7 @@ const Login = () => {
     password: '',
   })
   const { email, password } = state
-  const { currentUser } = useSelector((state) => state.user)
+  const { currentUser, loading } = useSelector((state) => state.user)
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -42,7 +43,9 @@ const Login = () => {
     let { name, value } = e.target
     setState({ ...state, [name]: value })
   }
-  return (
+  return loading ? (
+    <Spinner animation='border' variant='light' />
+  ) : (
     <div className='logIn-container'>
       <h1
         style={{
