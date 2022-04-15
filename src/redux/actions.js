@@ -8,6 +8,11 @@ import {
   signOut,
   signInWithPopup,
 } from 'firebase/auth'
+
+import axios from 'axios'
+
+/*register*/
+
 const registerStart = () => ({
   type: types.REGISTER_START,
 })
@@ -19,6 +24,8 @@ const registerFail = (error) => ({
   type: types.REGISTER_FAIL,
   payload: error,
 })
+
+/*log in */
 
 const loginStart = () => ({
   type: types.LOGIN_START,
@@ -32,6 +39,8 @@ const loginFail = (error) => ({
   payload: error,
 })
 
+/*log out */
+
 const logoutStart = () => ({
   type: types.LOGOUT_START,
 })
@@ -42,6 +51,8 @@ const logoutFail = (error) => ({
   type: types.LOGOUT_FAIL,
   payload: error,
 })
+
+/*google log in */
 
 const googleSignInStart = () => ({
   type: types.GOOGLE_SIGN_IN_START,
@@ -55,6 +66,8 @@ const googleSignInFail = (error) => ({
   payload: error,
 })
 
+/*facebook log in */
+
 const facebookSignInStart = () => ({
   type: types.FACEBOOK_SIGN_IN_START,
 })
@@ -64,6 +77,19 @@ const facebookSignInSuccess = (user) => ({
 })
 const facebookSignInFail = (error) => ({
   type: types.FACEBOOK_SIGN_IN_FAIL,
+  payload: error,
+})
+
+/*get exertcise */
+
+const getAllExcerciseStart = () => ({
+  type: types.GET_EXERCISE_START,
+})
+const getAllExcerciseSuccess = (exercises) => ({
+  type: types.GET_EXERCISE_SUCCESS,
+})
+const getAllExcerciseFail = (error) => ({
+  type: types.GET_EXERCISE_FAIL,
   payload: error,
 })
 
@@ -145,5 +171,30 @@ export const facebookSignInInitial = () => {
         dispatch(facebookSignInFail(error))
         alert(error)
       })
+  }
+}
+
+export const getAllExerciseInitial = () => {
+  return function (dispatch) {
+    dispatch(getAllExcerciseStart())
+    const options = {
+      method: 'GET',
+      url: 'https://exercisedb.p.rapidapi.com/exercises',
+      headers: {
+        'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com',
+        'X-RapidAPI-Key': 'fdc96c68admshfac222f18b64d47p1bb1c2jsn9e4c85c1eabe',
+      },
+    }
+
+    const exercises = axios
+      .request(options)
+      .then(function (response) {
+        console.log(response.data.type)
+      })
+      .catch(function (error) {
+        console.error(error)
+        dispatch(getAllExcerciseFail(error))
+      })
+    dispatch(getAllExcerciseSuccess(exercises))
   }
 }

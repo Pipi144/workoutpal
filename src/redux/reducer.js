@@ -4,6 +4,7 @@ const initialState = {
   loading: false,
   currentUser: null,
   error: null,
+  exercises: [],
 }
 
 const userReducer = (state = initialState, action) => {
@@ -47,8 +48,10 @@ const userReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
       }
+
     default:
       return state
   }
 }
+
 export default userReducer

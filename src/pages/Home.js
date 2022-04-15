@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { logoutInitial } from '../redux/actions'
+import { getAllExerciseInitial, logoutInitial } from '../redux/actions'
 import { useNavigate } from 'react-router-dom'
+import ExerciseBoard from '../components/ExerciseBoard'
 const Home = () => {
   const { currentUser } = useSelector((state) => state.user)
   const dispatch = useDispatch()
@@ -23,6 +24,7 @@ const Home = () => {
       <button className='btn btn-danger' onClick={handleAuth}>
         Log out
       </button>
+      <ExerciseBoard />
     </div>
   )
 }
