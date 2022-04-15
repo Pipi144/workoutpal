@@ -87,6 +87,7 @@ const getAllExcerciseStart = () => ({
 })
 const getAllExcerciseSuccess = (exercises) => ({
   type: types.GET_EXERCISE_SUCCESS,
+  payload: exercises,
 })
 const getAllExcerciseFail = (error) => ({
   type: types.GET_EXERCISE_FAIL,
@@ -186,15 +187,14 @@ export const getAllExerciseInitial = () => {
       },
     }
 
-    const exercises = axios
+    axios
       .request(options)
       .then(function (response) {
-        console.log(response.data.type)
+        dispatch(getAllExcerciseSuccess(response.data))
       })
       .catch(function (error) {
         console.error(error)
         dispatch(getAllExcerciseFail(error))
       })
-    dispatch(getAllExcerciseSuccess(exercises))
   }
 }

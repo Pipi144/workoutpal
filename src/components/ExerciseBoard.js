@@ -1,19 +1,23 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { getAllExerciseInitial } from '../redux/actions'
+import { Spinner } from 'react-bootstrap'
 
-function ExerciseBoard() {
-  const dispatch = useDispatch()
-  const { exercises } = useSelector((state) => state.exerciseState)
+const ExerciseBoard = ({ exercises, loading }) => {
+  if (loading) {
+    return <Spinner animation='border' variant='light' size='lg' />
+  }
 
-  useEffect(() => {
-    dispatch(getAllExerciseInitial())
-  }, [dispatch])
-  const items = exercises
   return (
-    <div>
-      <ul></ul>
-    </div>
+    exercises && (
+      <div>
+        <ul className='list-group mb-5'>
+          {exercises.map((exercise) => (
+            <li key={exercise.id} className='list-group-item'>
+              {exercise.name}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
   )
 }
 

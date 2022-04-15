@@ -1,12 +1,29 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getAllExerciseInitial, logoutInitial } from '../redux/actions'
 import { useNavigate } from 'react-router-dom'
 import ExerciseBoard from '../components/ExerciseBoard'
+import Pagination from '../components/Pagination'
 const Home = () => {
   const { currentUser } = useSelector((state) => state.user)
-  const dispatch = useDispatch()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const [pageCount, setPageCount] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [excercisesPerPage, setexcercisesPerPage] = useState(12)
+
+  const { exercises, loading } = useSelector((state) => state.exerciseState)
+  useEffect(() => {
+    dispatch(getAllExerciseInitial())
+  }, [dispatch])
+
+  const indexOfLastExcercise = currentPage * excercisesPerPage
+  const indexOfFirstExcercise = indexOfLastExcercise - excercisesPerPage
+  const currentExcercises = exercises.slice(
+    indexOfFirstExcercise,
+    indexOfLastExcercise
+  )
+
   const handleAuth = () => {
     if (currentUser) {
       dispatch(logoutInitial())
@@ -18,13 +35,8 @@ const Home = () => {
     }
   })
   return (
-    <div>
-      <h2>Welcome to our site</h2>
-      <br />
-      <button className='btn btn-danger' onClick={handleAuth}>
-        Log out
-      </button>
-      <ExerciseBoard />
+    <div style={{ width: '90%' }}>
+      <ExerciseBoard exercises={currentExcercises} loading={loading} />
     </div>
   )
 }

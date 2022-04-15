@@ -11,9 +11,11 @@ import { setUser } from './redux/actions'
 import Header from './components/Header'
 import AddContact from './pages/AddContact'
 import About from './pages/About'
+import { auth } from './firebase'
 
 function App() {
   const dispatch = useDispatch()
+  const { currentUser } = useSelector((state) => state.user)
   useEffect(() => {
     const auth = getAuth()
     auth.onAuthStateChanged((authUser) => {
@@ -27,7 +29,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className='App'>
-        <Header />
+        {currentUser && <Header />}
         <Routes>
           <Route exact path='/' element={<UserRoute component={Home} />} />
           <Route path='/login' element={<Login />} />

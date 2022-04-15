@@ -4,7 +4,6 @@ const initialState = {
   loading: false,
   currentUser: null,
   error: null,
-  exercises: [],
 }
 
 const userReducer = (state = initialState, action) => {

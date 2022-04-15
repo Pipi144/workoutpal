@@ -1,7 +1,9 @@
 import * as types from './actionTypes'
 
 const initialState = {
-  exercises: [],
+  exercises: null,
+  loading: false,
+  error: null,
 }
 
 const exerciseReducer = (state = initialState, action) => {
@@ -15,6 +17,7 @@ const exerciseReducer = (state = initialState, action) => {
       return {
         ...state,
         exercises: action.payload,
+        loading: false,
       }
     case types.GET_EXERCISE_FAIL:
       return {
