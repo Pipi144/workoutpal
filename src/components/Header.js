@@ -27,7 +27,7 @@ const Header = () => {
     }
   }, [location])
   return (
-    <div className='header'>
+    <div className='header' style={{ height: '15% !important' }}>
       <Link to='/'>
         <p className='logo'>Contact App</p>
       </Link>

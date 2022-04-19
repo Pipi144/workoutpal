@@ -4,25 +4,35 @@ import { getAllExerciseInitial, logoutInitial } from '../redux/actions'
 import { useNavigate } from 'react-router-dom'
 import ExerciseBoard from '../components/ExerciseBoard'
 import Pagination from '../components/Pagination'
+import ReactPaginate from 'react-paginate'
+import './Home.css'
 const Home = () => {
-  const { currentUser } = useSelector((state) => state.user)
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const [pageCount, setPageCount] = useState(0)
+  //user check
+  const { currentUser } = useSelector((state) => state.user)
+
+  //display exercise hooks
   const [currentPage, setCurrentPage] = useState(1)
-  const [excercisesPerPage, setexcercisesPerPage] = useState(12)
+  const [excercisesPerPage] = useState(5)
 
   const { exercises, loading } = useSelector((state) => state.exerciseState)
-  useEffect(() => {
-    dispatch(getAllExerciseInitial())
-  }, [dispatch])
 
   const indexOfLastExcercise = currentPage * excercisesPerPage
-  const indexOfFirstExcercise = indexOfLastExcercise - excercisesPerPage
-  const currentExcercises = exercises.slice(
-    indexOfFirstExcercise,
-    indexOfLastExcercise
-  )
+  const indexOfFirstExcercise = indexOfLastExcercise + excercisesPerPage
+  const pageCount = Math.ceil(exercises.length / excercisesPerPage)
+  const [currentExcercises, setCurrentExercises] = useState(exercises)
+
+  useEffect(() => {
+    if (!exercises) {
+      dispatch(getAllExerciseInitial())
+    }
+    if (exercises) {
+      setCurrentExercises(
+        exercises.slice(indexOfLastExcercise, indexOfFirstExcercise)
+      )
+    }
+  }, [dispatch, exercises])
 
   const handleAuth = () => {
     if (currentUser) {
@@ -34,10 +44,31 @@ const Home = () => {
       navigate('/login')
     }
   })
+
+  //change page
+  const changePage = ({ selected }) => {
+    setCurrentPage(selected)
+    setCurrentExercises(
+      exercises.slice(indexOfLastExcercise, indexOfFirstExcercise)
+    )
+  }
   return (
-    <div style={{ width: '90%' }}>
-      <ExerciseBoard exercises={currentExcercises} loading={loading} />
-    </div>
+    exercises && (
+      <div className='homeContainer' style={{ width: '90%', paddingTop: '5%' }}>
+        <ExerciseBoard exercises={currentExcercises} loading={loading} />
+        <ReactPaginate
+          previousLabel={'Previous'}
+          nextLabel={'Next'}
+          pageCount={pageCount}
+          onPageChange={changePage}
+          containerClassName={'paginationBttns'}
+          previousLinkClassName={'previousBttn'}
+          nextLinkClassName={'nextBttn'}
+          disabledClassName={'paginationDisabled'}
+          activeClassName={'paginationActive'}
+        />
+      </div>
+    )
   )
 }
 
