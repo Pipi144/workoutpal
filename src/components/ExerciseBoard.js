@@ -1,5 +1,6 @@
 import React from 'react'
 import { Spinner } from 'react-bootstrap'
+import './ExerciseBoard.css'
 
 const ExerciseBoard = ({ exercises, loading }) => {
   if (loading) {
@@ -7,10 +8,10 @@ const ExerciseBoard = ({ exercises, loading }) => {
   }
   return (
     exercises && (
-      <div>
+      <div className='exerciseBoardContainer'>
         <table
           className='table table-bordered'
-          style={{ backgroundColor: 'white' }}
+          style={{ backgroundColor: 'white', width: '100%', height: '100%' }}
         >
           <thead>
             <tr>

@@ -6,6 +6,7 @@ import ExerciseBoard from '../components/ExerciseBoard'
 import Pagination from '../components/Pagination'
 import ReactPaginate from 'react-paginate'
 import './Home.css'
+import MenuBar from '../components/MenuBar'
 const Home = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -13,14 +14,14 @@ const Home = () => {
   const { currentUser } = useSelector((state) => state.user)
 
   //display exercise hooks
-  const [currentPage, setCurrentPage] = useState(1)
-  const [excercisesPerPage] = useState(5)
+  const [currentPage, setCurrentPage] = useState(0)
+  const excercisesPerPage = 5
 
   const { exercises, loading } = useSelector((state) => state.exerciseState)
 
   const indexOfLastExcercise = currentPage * excercisesPerPage
   const indexOfFirstExcercise = indexOfLastExcercise + excercisesPerPage
-  const pageCount = Math.ceil(exercises.length / excercisesPerPage)
+  const [pageCount, setPageCount] = useState(0)
   const [currentExcercises, setCurrentExercises] = useState(exercises)
 
   useEffect(() => {
@@ -31,14 +32,10 @@ const Home = () => {
       setCurrentExercises(
         exercises.slice(indexOfLastExcercise, indexOfFirstExcercise)
       )
+      setPageCount(Math.ceil(exercises.length / excercisesPerPage))
     }
-  }, [dispatch, exercises])
+  }, [dispatch, exercises, setCurrentExercises, setPageCount])
 
-  const handleAuth = () => {
-    if (currentUser) {
-      dispatch(logoutInitial())
-    }
-  }
   useEffect(() => {
     if (!currentUser) {
       navigate('/login')
@@ -51,22 +48,33 @@ const Home = () => {
     setCurrentExercises(
       exercises.slice(indexOfLastExcercise, indexOfFirstExcercise)
     )
+    console.log(currentExcercises)
   }
   return (
     exercises && (
-      <div className='homeContainer' style={{ width: '90%', paddingTop: '5%' }}>
+      <div
+        className='homeContainer'
+        style={{ maxWidth: '80%', paddingTop: '5%' }}
+      >
+        <MenuBar />
         <ExerciseBoard exercises={currentExcercises} loading={loading} />
-        <ReactPaginate
-          previousLabel={'Previous'}
-          nextLabel={'Next'}
-          pageCount={pageCount}
-          onPageChange={changePage}
-          containerClassName={'paginationBttns'}
-          previousLinkClassName={'previousBttn'}
-          nextLinkClassName={'nextBttn'}
-          disabledClassName={'paginationDisabled'}
-          activeClassName={'paginationActive'}
-        />
+        <div className='paginateContainer'>
+          <ReactPaginate
+            previousLabel={'Previous'}
+            nextLabel={'Next'}
+            pageCount={pageCount}
+            onPageChange={changePage}
+            containerClassName={'pagination'}
+            previousLinkClassName={'page-link'}
+            nextLinkClassName={'page-link'}
+            disabledClassName={'disabled'}
+            activeClassName={'active'}
+            pageClassName={'page-item'}
+            pageLinkClassName={'page-link'}
+            breakClassName={'page-item'}
+            breakLinkClassName={'page-link'}
+          />
+        </div>
       </div>
     )
   )
