@@ -1,0 +1,26 @@
+.workoutContainer {
+ height: 95%;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ flex-direction: column;
+ width: 100%;
+}
+
+.workoutItem {
+ margin: 2px;
+ width: 90%;
+ flex: 1
+}
+
+.dropdownBtn {
+ width: 100% ;
+}
+
+.workoutMenuItem {
+ width: 100%;
+}
+
+.workoutMenuItem a{
+ text-align: center;
+}

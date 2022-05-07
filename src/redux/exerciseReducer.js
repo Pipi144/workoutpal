@@ -25,6 +25,23 @@ const exerciseReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
       }
+    case types.CLEAR_EXERCISE_START:
+      return {
+        ...state,
+        loading: true,
+      }
+    case types.CLEAR_EXERCISE_SUCCESS:
+      return {
+        ...state,
+        exercises: null,
+        loading: false,
+      }
+    case types.CLEAR_EXERCISE_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      }
 
     default:
       return state

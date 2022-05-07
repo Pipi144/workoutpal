@@ -94,6 +94,17 @@ const getAllExcerciseFail = (error) => ({
   payload: error,
 })
 
+const clearAllExcerciseStart = () => ({
+  type: types.CLEAR_EXERCISE_START,
+})
+const clearAllExcerciseSuccess = () => ({
+  type: types.CLEAR_EXERCISE_SUCCESS,
+})
+const clearAllExcerciseFail = (error) => ({
+  type: types.CLEAR_EXERCISE_FAIL,
+  payload: error,
+})
+
 export const registerInitial = (email, password, displayName) => {
   return function (dispatch) {
     dispatch(registerStart())
@@ -128,13 +139,16 @@ export const loginInitial = (email, password) => {
 export const logoutInitial = () => {
   return function (dispatch) {
     dispatch(logoutStart())
+    dispatch(clearAllExcerciseStart())
     const auth = getAuth()
     signOut(auth)
       .then((resp) => {
         dispatch(logoutSuccess())
+        dispatch(clearAllExcerciseSuccess())
       })
       .catch((error) => {
         dispatch(logoutFail(error))
+        dispatch(clearAllExcerciseFail())
         alert(error)
       })
   }

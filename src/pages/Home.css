@@ -1,18 +1,7 @@
-
 .homeContainer {
  width: 100%;
- display: flex;
- flex-direction: column;
-align-items: center;
-max-height: 85%;
-justify-content: center;
-flex : 1
+ height: 95%;
+ margin: 0;
+ padding: 0;
 }
 
-.paginateContainer {
- max-width: 50%;
- padding: 5%;
- display: flex;
- justify-content: center;
- align-items: center;
-}
