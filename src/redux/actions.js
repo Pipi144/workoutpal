@@ -94,6 +94,7 @@ const getAllExcerciseFail = (error) => ({
   payload: error,
 })
 
+//clear all exercise
 const clearAllExcerciseStart = () => ({
   type: types.CLEAR_EXERCISE_START,
 })
@@ -105,6 +106,18 @@ const clearAllExcerciseFail = (error) => ({
   payload: error,
 })
 
+//add exercise to workout
+const addExcerciseStart = () => ({
+  type: types.ADD_EXERCISE_START,
+})
+const addExcerciseSuccess = (exercise) => ({
+  type: types.ADD_EXERCISE_SUCCESS,
+  payload: exercise,
+})
+const addExcerciseFail = (error) => ({
+  type: types.ADD_EXERCISE_FAIL,
+  payload: error,
+})
 export const registerInitial = (email, password, displayName) => {
   return function (dispatch) {
     dispatch(registerStart())
@@ -210,5 +223,16 @@ export const getAllExerciseInitial = () => {
         console.error(error)
         dispatch(getAllExcerciseFail(error))
       })
+  }
+}
+
+export const addExerciseInitial = (exercise) => {
+  return function (dispatch) {
+    dispatch(addExcerciseStart())
+    if (exercise) {
+      dispatch(addExcerciseSuccess(exercise))
+    } else {
+      dispatch(addExcerciseFail('Fail to add'))
+    }
   }
 }

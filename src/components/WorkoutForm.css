@@ -1,0 +1,28 @@
+.workoutFormContainer {
+ display: flex;
+ flex-direction: column;
+}
+.textContainer {
+ display: flex;
+ flex-direction: row;
+ flex: 1;
+ margin: 2px;
+ justify-content: center;
+}
+
+.textContainer input{
+ width: 70%;
+}
+.optionContainer{
+ display: flex;
+ flex-direction: row;
+ align-items: center;
+}
+
+.checkContainer {
+ display: flex;
+ flex: 1
+}
+.checkContainer input {
+ margin: 3px;
+}

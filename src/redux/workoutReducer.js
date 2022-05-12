@@ -1,7 +1,15 @@
 import * as types from './actionTypes'
 
 const initialState = {
-  workout: null,
+  workout: {
+    Monday: {},
+    Tuesday: {},
+    Wednesday: {},
+    Thursday: {},
+    Friday: {},
+    Saturday: {},
+    Sunday: {},
+  },
   loading: false,
   error: null,
 }
@@ -15,7 +23,7 @@ const workoutReducer = (state = initialState, action) => {
       }
     case types.ADD_EXERCISE_SUCCESS:
       return {
-        ...state,
+        ...state.workout,
         workout: action.payload,
         loading: false,
       }
