@@ -229,10 +229,12 @@ export const getAllExerciseInitial = () => {
 export const addExerciseInitial = (exercise) => {
   return function (dispatch) {
     dispatch(addExcerciseStart())
-    if (exercise) {
-      dispatch(addExcerciseSuccess(exercise))
-    } else {
-      dispatch(addExcerciseFail('Fail to add'))
+    try {
+      if (exercise) {
+        dispatch(addExcerciseSuccess(exercise))
+      }
+    } catch (err) {
+      dispatch(addExcerciseFail(err))
     }
   }
 }

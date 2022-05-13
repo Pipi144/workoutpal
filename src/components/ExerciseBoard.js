@@ -12,9 +12,20 @@ const ExerciseBoard = ({ exercises, loading }) => {
     return <Spinner animation='border' variant='light' size='lg' />
   }
 
-  const handleClose = () => setShow(false)
-  const handleShow = () => {
+  const handleClose = () => {
+    setShow(false)
+    setAddedExercise('')
+  }
+  const handleShow = () => (event) => {
     setShow(true)
+
+    //get id of chosen exercise
+    const idOfChosenExercise = event.target.id
+    //get an array of exercises matching id of chosen exercise, always return an array with length of 1
+    const chosenExercise = exercises.filter(
+      (exercise) => exercise.id === idOfChosenExercise
+    )
+    setAddedExercise(chosenExercise[0])
   }
   return (
     exercises && (
@@ -37,7 +48,11 @@ const ExerciseBoard = ({ exercises, loading }) => {
               <tr key={exercise.id}>
                 <td>
                   <h5>{exercise.name}</h5>
-                  <Button variant='primary' onClick={handleShow}>
+                  <Button
+                    variant='primary'
+                    onClick={handleShow()}
+                    id={exercise.id}
+                  >
                     Add to workout
                   </Button>
                 </td>
@@ -56,7 +71,7 @@ const ExerciseBoard = ({ exercises, loading }) => {
             <Modal.Title>Add Exercise</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <WorkoutForm />
+            <WorkoutForm exercise={addedExercise} />
           </Modal.Body>
           <Modal.Footer>
             <Button variant='secondary' onClick={handleClose}>
