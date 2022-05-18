@@ -12,6 +12,7 @@ const Register = () => {
     passwordConfirm: '',
   })
   const { currentUser } = useSelector((state) => state.user)
+
   const navigate = useNavigate()
   const dispatch = useDispatch()
 

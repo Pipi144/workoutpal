@@ -7,6 +7,7 @@
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.24.0",
+    "express": "^4.18.1",
     "firebase": "^9.6.10",
     "react": "^18.0.0",
     "react-bootstrap": "^2.2.2",
@@ -43,5 +44,19 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pipi144/workoutpal.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pipi144/workoutpal/issues"
+  },
+  "homepage": "https://github.com/Pipi144/workoutpal#readme"
 }

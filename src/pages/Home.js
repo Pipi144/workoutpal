@@ -10,6 +10,7 @@ const Home = () => {
   const dispatch = useDispatch()
   //user check
   const { currentUser } = useSelector((state) => state.user)
+  console.log(currentUser)
 
   //display exercise hooks
   const [currentPage, setCurrentPage] = useState(0)

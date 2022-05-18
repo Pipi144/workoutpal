@@ -1,5 +1,5 @@
 import * as types from './actionTypes'
-import { auth, facebookAuthProvider, googleAuthProvider } from '../firebase'
+import { facebookAuthProvider, googleAuthProvider } from '../firebase'
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -8,7 +8,8 @@ import {
   signOut,
   signInWithPopup,
 } from 'firebase/auth'
-
+import { db } from '../firebase'
+import { addDoc, doc, setDoc, collection } from 'firebase/firestore'
 import axios from 'axios'
 
 /*register*/
@@ -118,13 +119,27 @@ const addExcerciseFail = (error) => ({
   type: types.ADD_EXERCISE_FAIL,
   payload: error,
 })
-export const registerInitial = (email, password, displayName) => {
+export const registerInitial = (email, password, displayName, id) => {
   return function (dispatch) {
     dispatch(registerStart())
     const auth = getAuth()
+
     createUserWithEmailAndPassword(auth, email, password)
-      .then(({ user }) => {
+      .then(async ({ user }) => {
         updateProfile(user, { displayName })
+        console.log(user)
+        await addDoc(collection(db, 'users'), {
+          name: displayName,
+          email: email,
+          password: password,
+          id: user.uid,
+        })
+          .then(function (res) {
+            alert('saved:', res)
+          })
+          .catch(function (err) {
+            alert(err)
+          })
         dispatch(registerSuccess(user))
       })
       .catch((error) => {

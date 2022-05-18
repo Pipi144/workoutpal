@@ -11,7 +11,6 @@ import { setUser } from './redux/actions'
 import Header from './components/Header'
 import AddContact from './pages/AddContact'
 import About from './pages/About'
-import { auth } from './firebase'
 
 function App() {
   const dispatch = useDispatch()
